@@ -1,0 +1,2 @@
+C:\Programming\Algorithms and data structures\Treap\x64\Debug\Treap.exe
+C:\Programming\Algorithms and data structures\Treap\x64\Debug\Treap.pdb

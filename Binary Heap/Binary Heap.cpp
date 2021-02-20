@@ -8,9 +8,9 @@ void swap(int* x, int* y);
 // A class for Min Heap 
 class MinHeap
 {
-    int* harr; // pointer to array of elements in heap 
+    int* heapArray; // pointer to array of elements in heap 
     int capacity; // maximum possible size of min heap 
-    int heap_size; // Current number of elements in min heap 
+    int heapSize; // Current number of elements in min heap 
 public:
     // Constructor 
     MinHeap(int capacity);
@@ -39,53 +39,59 @@ public:
     void decreaseKey(int i, int new_val);
 
     // Returns the minimum key (key at root) from min heap 
-    int getMin() { return harr[0]; }
+    int getMin()
+    { 
+        return heapArray[0];
+    }
 
     // Deletes a key stored at index i 
     void deleteKey(int i);
 
     // Inserts a new key 'k' 
     void insertKey(int k);
+
+    // Print elements of heapArray
+    void PrintSelf();
 };
 
 // Constructor: Builds a heap from a given array a[] of given size 
 MinHeap::MinHeap(int cap)
 {
-    heap_size = 0;
+    heapSize = 0;
     capacity = cap;
-    harr = new int[cap];
+    heapArray = new int[cap];
 }
 
 // Inserts a new key 'k' 
 void MinHeap::insertKey(int k)
 {
-    if (heap_size == capacity)
+    if (heapSize == capacity)
     {
         std::cout << "\nOverflow: Could not insertKey\n";
         return;
     }
 
     // First insert the new key at the end 
-    heap_size++;
-    int i = heap_size - 1;
-    harr[i] = k;
+    heapSize++;
+    int i = heapSize - 1;
+    heapArray[i] = k;
 
     // Fix the min heap property if it is violated 
-    while (i != 0 && harr[parent(i)] > harr[i])
+    while (i != 0 && heapArray[parent(i)] > heapArray[i])
     {
-        swap(&harr[i], &harr[parent(i)]);
+        swap(&heapArray[i], &heapArray[parent(i)]);
         i = parent(i);
     }
 }
 
 // Decreases value of key at index 'i' to new_val.  It is assumed that 
-// new_val is smaller than harr[i]. 
+// new_val is smaller than heapArray[i]. 
 void MinHeap::decreaseKey(int i, int new_val)
 {
-    harr[i] = new_val;
-    while (i != 0 && harr[parent(i)] > harr[i])
+    heapArray[i] = new_val;
+    while (i != 0 && heapArray[parent(i)] > heapArray[i])
     {
-        swap(&harr[i], &harr[parent(i)]);
+        swap(&heapArray[i], &heapArray[parent(i)]);
         i = parent(i);
     }
 }
@@ -93,18 +99,18 @@ void MinHeap::decreaseKey(int i, int new_val)
 // Method to remove minimum element (or root) from min heap 
 int MinHeap::extractMin()
 {
-    if (heap_size <= 0)
+    if (heapSize <= 0)
         return INT_MAX;
-    if (heap_size == 1)
+    if (heapSize == 1)
     {
-        heap_size--;
-        return harr[0];
+        heapSize--;
+        return heapArray[0];
     }
 
     // Store the minimum value, and remove it from heap 
-    int root = harr[0];
-    harr[0] = harr[heap_size - 1];
-    heap_size--;
+    int root = heapArray[0];
+    heapArray[0] = heapArray[heapSize - 1];
+    heapSize--;
     MinHeapify(0);
 
     return root;
@@ -126,15 +132,22 @@ void MinHeap::MinHeapify(int i)
     int l = left(i);
     int r = right(i);
     int smallest = i;
-    if (l < heap_size && harr[l] < harr[i])
+    if (l < heapSize && heapArray[l] < heapArray[i])
         smallest = l;
-    if (r < heap_size && harr[r] < harr[smallest])
+    if (r < heapSize && heapArray[r] < heapArray[smallest])
         smallest = r;
     if (smallest != i)
     {
-        swap(&harr[i], &harr[smallest]);
+        swap(&heapArray[i], &heapArray[smallest]);
         MinHeapify(smallest);
     }
+}
+
+void MinHeap::PrintSelf() {
+    for (size_t i = 0; i < heapSize; i++) {
+        std::cout << heapArray[i] << " ";
+    }
+    std::cout << std::endl;
 }
 
 // A utility function to swap two elements 
@@ -147,6 +160,14 @@ void swap(int* x, int* y)
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+    MinHeap minHeap(6);
+    minHeap.insertKey(1);
+    minHeap.insertKey(3);
+    minHeap.insertKey(6);
+    minHeap.insertKey(5);
+    minHeap.insertKey(9);
+    minHeap.insertKey(8);
+    minHeap.PrintSelf();
 }
 

@@ -1,0 +1,2 @@
+C:\Programming\Algorithms and data structures\Binary Heap\Debug\Binary Heap.exe
+C:\Programming\Algorithms and data structures\Binary Heap\Debug\Binary Heap.pdb
