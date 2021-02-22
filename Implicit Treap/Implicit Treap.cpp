@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <map>
 
 // source https://youtu.be/MLIbII4sBs0
 
@@ -19,7 +20,16 @@ public:
     static void Update(Node* n) {
         if (n) {
             n->size = GetSize(n->left) + 1 + GetSize(n->right);
+            SetParent(n->left, n);
+            SetParent(n->right, n);
         }
+    }
+
+    static void SetParent(Node* n,Node* p) {
+        if (n) {
+            n->parent = p;
+        }
+
     }
 
     // all keys in a are less than in b
@@ -55,16 +65,32 @@ public:
         }
         Update(a);
         Update(b);
-
+        SetParent(a, nullptr);
+        SetParent(b, nullptr);
     }
+
+    static int GetIndex(Node* n) {
+        int index = GetSize(n->left);
+        while (n->parent) {
+            if (n->parent->right == n) {
+                index += GetSize(n->parent->left) + 1;
+            }
+            n = n->parent;
+        }
+        return index;
+    }
+
 
     struct Node {
         int priority;
         int value, size = 1;
         Node* left = nullptr;
         Node* right = nullptr;
+        Node* parent = nullptr;
         Node(int value) : priority(generator()), value(value) {}
     };
+
+    std::map<int, Node*> location;
 
     int Get(int index) {
         Node* less, * equal, * greater;
@@ -76,31 +102,49 @@ public:
     }
 
     void PushBack(int value) {
-        root = Merge(root, new Node(value));
+        location[value] = new Node(value);
+        root = Merge(root, location[value]);
     }
-
+    
+    /*
     void PushFront(int value) {
         root = Merge(new Node(value), root);
     }
+    
 
     void Insert(int index,int value) {
         Node* less, *greater;
         Split(root, index, less, greater);
         root = Merge(Merge(less, new Node(value)), greater);
     }
+    */
 
     void Erase(int index) {
         Node* less, * equal, * greater;
         Split(root, index, less, greater);
         Split(greater, 1, equal, greater);
+        if (equal) {
+            location.erase(equal->value);
+        }
         root = Merge(less, greater);
     }
 
+    /*
     void Erase(int left,int right) {
         Node* less, * equal, * greater;
         Split(root, left, less, greater);
         Split(greater, right - left + 1, equal, greater);
         root = Merge(less, greater);
+    }
+    */
+
+    int GetIndex(int value) {
+        if (location.count(value)) {
+            return GetIndex(location[value]);
+        }
+        else {
+            return -1; 
+        }
     }
 
     int Size() {
@@ -114,28 +158,16 @@ std::minstd_rand Treap::generator;
 int main() {
     Treap t;
 
-    t.PushBack(333);
-    t.PushBack(111);
-    t.PushBack(888);
-    t.PushBack(777);
-    t.PushBack(555);
-    for (int i = 0; i < t.Size(); i++) {
-        std::cout << t.Get(i) << " ";
-    }
-    std::cout << std::endl;
+    t.PushBack(3);
+    t.PushBack(14);
+    t.PushBack(15);
+    t.PushBack(92);
+    t.PushBack(6);
+    
+    std::cout << t.GetIndex(3) << std::endl;
+    std::cout << t.GetIndex(6) << std::endl;
+    std::cout << t.GetIndex(92) << std::endl;
+    std::cout << t.GetIndex(123) << std::endl;
 
-    t.PushFront(222);
-
-    for (int i = 0; i < t.Size(); i++) {
-        std::cout << t.Get(i) << " ";
-    }
-    std::cout << std::endl;
-
-    t.Insert(3, 0);
-
-    for (int i = 0; i < t.Size(); i++) {
-        std::cout << t.Get(i) << " ";
-    }
-    std::cout << std::endl;
     return EXIT_SUCCESS;
 }
