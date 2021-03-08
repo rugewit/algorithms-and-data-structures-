@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/rugewit/Programming/Cpp/algorithms-and-data-structures-/ZFunction/main.cpp" "/home/rugewit/Programming/Cpp/algorithms-and-data-structures-/ZFunction/cmake-build-debug/CMakeFiles/ZFunction.dir/main.cpp.o"
+  "C:/Programming/Algorithms and data structures/ZFunction Clion/main.cpp" "C:/Programming/Algorithms and data structures/ZFunction Clion/cmake-build-debug/CMakeFiles/ZFunction.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

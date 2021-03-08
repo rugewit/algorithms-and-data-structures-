@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ZFunction.dir/main.cpp.o"
-  "ZFunction"
+  "CMakeFiles/ZFunction.dir/main.cpp.obj"
+  "ZFunction.exe"
+  "ZFunction.exe.manifest"
   "ZFunction.pdb"
+  "libZFunction.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
