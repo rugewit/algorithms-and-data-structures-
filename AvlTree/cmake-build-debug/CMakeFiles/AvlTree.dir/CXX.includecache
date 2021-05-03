@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rugewit/Programming/Cpp/algorithms-and-data-structures-/AvlTree/generate.cpp
+iostream
+-
+string
+-
+vector
+-
+fstream
+-
+random
+-
+
