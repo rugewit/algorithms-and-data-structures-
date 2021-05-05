@@ -4,6 +4,20 @@
 
 // source https://youtu.be/68mMGJl5F8s
 
+/*
+int getRandomNumber() {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,100); // distribution in range [1, 6]
+    return dist6(rng);
+}
+*/
+
+int getPriority() {
+    return rand() % 100 + 1;
+}
+
+
 class Treap {
 public:
     static std::minstd_rand generator;
@@ -61,9 +75,9 @@ public:
     struct Node {
         int key, priority;
         int value, size = 1;
-Node* left = nullptr;
+        Node* left = nullptr;
         Node* right = nullptr;
-        Node(int key,int value) : key(key), priority(generator()), value(value) {}
+        Node(int key,int value) : key(key), priority(getPriority()), value(value) {}
     };
 
     bool Contains(int key) {
@@ -78,6 +92,10 @@ Node* left = nullptr;
     void Insert(int key,int value) {
         Node* less,*greater;
         Split(root, key, less, greater);
+        std::cout << "less is "  << std::endl;
+        Print(less,0,none);
+        std::cout << "greater is "  << std::endl;
+        Print(greater,0,none);
         root = Merge(Merge(less, new Node(key,value)), greater);
     }
 
@@ -103,6 +121,8 @@ Node* left = nullptr;
 
         std::string postfix;
 
+        postfix += " (" + std::to_string(node->priority) + ")";
+
         if (dir == left) {
             postfix += " left";
         }
@@ -116,8 +136,7 @@ Node* left = nullptr;
     }
 };
 
-std::minstd_rand Treap::generator;
-
+//std::minstd_rand Treap::generator;
 
 int main() {
     Treap treap;
@@ -126,13 +145,15 @@ int main() {
     std::vector<int> numbers;
 
     int num;
-    while(std::cin >> num){
+    while(std::cin >> num) {
         numbers.push_back(num);
+        std::cout << num << std::endl;
     }
 
     for(const auto& el : numbers) {
         std::cout << "is inserting " << std::to_string(el) << std::endl;
         treap.Insert(el,0);
+        std::cout << "result is " << std::endl;
         treap.Print(treap.root, 0,Treap::directions::none);
         std::cout << "****************************" << std::endl;
     }

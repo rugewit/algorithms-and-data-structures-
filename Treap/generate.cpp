@@ -4,11 +4,11 @@
 #include <fstream>
 #include <random>
 
-#define MAX_COUNT_OF_NUMBERS 15
+#define MAX_COUNT_OF_NUMBERS 16
 
 int main() {
 
-    std::ofstream file ("test_numbers.txt");
+    std::ofstream file ("test_priority.txt");
     if (file.is_open()) {
         for(int i = 0;i < MAX_COUNT_OF_NUMBERS; i++) {
             std::random_device dev;
